@@ -8,6 +8,7 @@ import Footer from "./Footer";
 import AffiliateProgramPage from "./AffiliateProgramPage";
 import AboutUs from "./AboutUs";
 import ProductList from "./ProductList";
+import InquireItem from "./InquireItem";
 
 export {
     Header, 
@@ -19,5 +20,6 @@ export {
     Footer,
     AffiliateProgramPage,
     AboutUs,
-    ProductList
+    ProductList,
+    InquireItem
 }
