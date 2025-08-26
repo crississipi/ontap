@@ -27,6 +27,20 @@
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: #5A5CA8; border-radius: 10px; }
 
+/* Hide number input spinners cross-browser */
+input[type="number"] {
+  appearance: textfield;        /* Standard */
+  -moz-appearance: textfield;   /* Firefox */
+  -webkit-appearance: none;     /* Safari/Chrome/Edge */
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  appearance: none;             /* Standard */
+  -webkit-appearance: none;     /* Safari/Chrome/Edge */
+  margin: 0;
+}
+
 /*IOWAN FONT*/
 @font-face {
   font-family: 'IOwan';
