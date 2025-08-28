@@ -14,10 +14,11 @@ const Header = ({ setPage }: HeaderProps) => {
   const [showNav, isNavShown] = useState(false);
   return (
     <div className='h-16 w-full bg-white flex fixed top-0 font-semibold z-50 items-center'>
-        <div className='w-full h-full md:w-auto flex items-center z-50 bg-white pl-5'>
+        <div className='w-full h-full md:w-auto flex items-center z-50 bg-white'>
             <button 
                 type="button"
-                className='h-full w-auto flex items-center'
+                className='h-full w-auto flex items-center px-3 group'
+                onClick={() => setPage(0)}
             >
                 <Image
                     priority
@@ -25,7 +26,7 @@ const Header = ({ setPage }: HeaderProps) => {
                     width={2048}
                     alt='ontap creatives logo'
                     src='/images/ontap-logo.png'
-                    className='max-h-14 w-14 object-contain'
+                    className='max-h-14 w-14 object-contain group-focus:scale-110 ease-out duration-200'
                 />
             </button>
             <button 
@@ -40,7 +41,7 @@ const Header = ({ setPage }: HeaderProps) => {
             <button 
                 type="button"
                 className='h-full max-h-16 px-3 w-full text-xl md:text-lg hover:bg-light-blue focus:bg-light-blue ease-out duration-200'
-                onClick={() => setPage(0)}
+                onClick={() => {setPage(0); isNavShown(false);}}
             >
                 Home
             </button>
@@ -51,14 +52,14 @@ const Header = ({ setPage }: HeaderProps) => {
             <button 
                 type="button"
                 className='h-full max-h-16 px-3 w-full text-xl md:text-lg hover:bg-light-blue focus:bg-light-blue ease-out duration-200'
-                onClick={() => setPage(1)}
+                onClick={() => {setPage(1); isNavShown(false);}}
             >
                 Affiliate Program
             </button>
             <button 
                 type="button"
                 className='h-full max-h-16 w-full text-xl md:text-lg flex items-center justify-center gap-1 hover:bg-light-blue focus:bg-light-blue ease-out duration-200'
-                onClick={() => setPage(3)}
+                onClick={() => {setPage(3); isNavShown(false);}}
             >
                 Shop
                 <BsFillCaretRightFill />

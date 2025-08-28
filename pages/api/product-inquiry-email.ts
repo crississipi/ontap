@@ -39,10 +39,13 @@ export default async function handler(
     }, 
   });
  
+
+
+  
   try {
     await transporter.sendMail({
       from: `"OnTap Inquiry" <${process.env.SMTP_USER}>`,
-      to: 'crismalipico12@gmail.com',
+      to: email,
       subject: subject,
       html: `<div style="font-family: system-ui, sans-serif, Arial; font-size: 12px;">
         <div><strong>${email}</strong> has sent you an email.&nbsp; Kindly reply at your earliest convenience.</div>
@@ -67,5 +70,11 @@ export default async function handler(
     return res.status(500).json({ success: false, message: 'Failed to send email' });
   }
 }
+
+
+
+
+
+
 
 

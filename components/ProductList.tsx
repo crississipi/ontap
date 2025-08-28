@@ -64,7 +64,7 @@ const ProductList = () => {
     <section className='min-h-[100vh] w-full flex flex-col items-center justify-center py-16 bg-neutral-50'>
       <h1 className='z-10 w-full text-center text-3xl text-black font-semibold md:text-5xl'>OnTap BizCard Products</h1>
       
-      <div className='w-full md:w-3/4 h-full grid grid-cols-1 md:grid-cols-4 gap-3 md:gap-7 px-10 py-8'>
+      <div className='w-full md:w-3/4 h-full grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-7 px-3 py-8 md:px-10'>
         {ProductCardInfo[0].map((val,i) => (
           <ProductCard 
             key={`product-${i}`} 
@@ -81,14 +81,14 @@ const ProductList = () => {
       </div>
       
       <h2 className='z-10 w-full text-center text-3xl text-black font-semibold md:text-5xl md:mt-10'>Other Products</h2>
-      <div className='w-full md:w-3/4 h-full grid grid-cols-1 md:grid-cols-4 gap-3 md:gap-7 px-10 py-8'>
+      <div className='w-full md:w-3/4 h-full grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-7 px-3 md:px-10 py-8'>
         {ProductCardInfo[1].map((val,i) => (
           <ProductCard 
             key={`otherprod-${i}`} 
             imgUrl={val.imgUrl}
             productName={val.name}
             productDesc={val.desc}
-            size='aspect-[3/4] md:aspect-[3/4]'
+            size='aspect-[3/4]'
             setInquireItem={setInquireItem}
             setClickedItem={setClickedItem} // ✅ pass setter
             hoverable={true}
@@ -102,7 +102,7 @@ const ProductList = () => {
           imgUrl={clickedItem.imgUrl}
           productName={clickedItem.name}
           productDesc={clickedItem.desc}
-          size={"aspect-[3/4] md:aspect-[3/5]"} 
+          size={"min-h-3/7 w-full md:aspect-[3/5]"} 
           setInquireItem={setInquireItem} 
           inquire={inquire} 
           hoverable={false}
