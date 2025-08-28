@@ -1,6 +1,6 @@
 "use client";
 
-import { About, AboutUs, ClientList, FillUpForm, Footer, Header, Hero, InquireItem, ProductList, VideoTutorial } from "@/components";
+import { About, AboutUs, ClientList, FillUpForm, Footer, Header, Hero, ProductList, VideoTutorial } from "@/components";
 import AffiliateProgramPage from "@/components/AffiliateProgramPage";
 import { JSX, useState } from "react";
 

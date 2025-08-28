@@ -3,7 +3,6 @@
 import React, { useState } from 'react'
 import Image from "next/image";
 import { BsFillCaretRightFill } from 'react-icons/bs';
-import { SlHandbag } from 'react-icons/sl';
 import { HiOutlineMenuAlt3 } from 'react-icons/hi';
 
 interface HeaderProps {
