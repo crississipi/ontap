@@ -2063,7 +2063,7 @@ const getInputs = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>)
                     <br />
                     <strong className="capitalize">{userInfo.name}</strong>
                     <br />
-                    <strong>{userInfo.contact}</strong>
+                    <a href={`tel:${userInfo.contact.trim().replace(/\s+/g, "")}`}>{userInfo.contact}</a>
                     <br />
                     <strong className="lowercase">{userInfo.email}</strong>
                 </>

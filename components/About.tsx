@@ -2,8 +2,8 @@
 
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import { ObserverProps } from '@/types';
 import { motion } from 'framer-motion';
+import OnTapAnimation from './OnTapAnimation';
 
 function useInView(threshold = 0.1) {
   const ref = useRef<HTMLDivElement | null>(null);
@@ -49,15 +49,10 @@ const About = () => {
             >A smart business card is a game-changer in the digital era, revolutionizing the way we network and connect. This cutting-edge innovation seamlessly combines technology and connectivity to make you stand out from the crowd, It allows you to showcase your creativity and uniqueness, setting you apart from the competition. By effortlessly sharing your contact information, social media profiles, and portfolio with a simple tap or scan, you can effortlessly expand your network and foster meaningful relationships. These connections can open doors to new opportunities and collaborations, bringing success to your professional endeavors. In this rapidly evolving world, a smart business card is an essential tool for any ambitious individual looking to thrive in the digital landscape.
             </motion.p>
         </div>
-        <div ref={section2Ref} className='h-auto w-full md:w-3/4 flex flex-col md:flex-row gap-5 items-center'>
+        <div ref={section2Ref} className='h-auto w-full md:w-4/5 flex flex-col md:flex-row gap-20 items-center'>
+            <OnTapAnimation />
             <motion.div 
-                className='h-96 w-3/4 md:min-w-1/3 rounded-xl bg-gray-300'
-                initial={{ scale: 0.7 }}
-                animate={{ scale: section2Visible ? 1 : 0.7 }}
-                transition={{ duration: 1, ease: "easeOut", delay: 0.3 }}
-            ></motion.div>
-            <motion.div 
-                className='w-auto flex flex-col gap-3'
+                className='w-auto flex flex-col gap-3 md:ml-32'
                 initial={{ x: "250%" }}
                 animate={{ x: section2Visible ? "0%" : "250%" }}
                 transition={{ duration: 0.7, ease: "easeOut" }}

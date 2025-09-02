@@ -148,10 +148,10 @@ const Hero = forwardRef<HTMLDivElement, ObserverProps>(({ isInView }, ref) => {
                     ))}
                 </div>
         </div>
-        <button 
-            type="button"
+        <a 
+            href='https://portal.ontap.ph/login'
             className='mt-auto py-3 px-12 mb-0.5 w-min rounded-t-md bg-light-blue z-20 text-black font-semibold text-lg tracking-wider hover:bg-blue focus:bg-blue hover:text-white focus:text-white ease-out duration-200'
-        >LOGIN</button>
+        >LOGIN</a>
     </div>
   );
 });

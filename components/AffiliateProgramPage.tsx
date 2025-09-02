@@ -31,10 +31,11 @@ const AffiliateProgramPage = () => {
   
   const { ref: section1Ref, isInView: section1Visible } = useInView();
   const { ref: section2Ref, isInView: section2Visible } = useInView();
+  const { ref: section3Ref, isInView: section3Visible } = useInView();
 
   return (
     <div className='h-auto w-full flex flex-col'>
-        <div ref={section1Ref} className='h-full md:h-[100vh] w-full relative flex items-center pl-5 py-10 md:py-0'>
+        <div ref={section1Ref} className='h-full md:h-[100vh] w-full relative flex items-center pl-5 py-10 md:py-0 overflow-hidden'>
             <Image
                 height={4096}
                 width={4096}
@@ -54,6 +55,34 @@ const AffiliateProgramPage = () => {
             >
                 <h1 className='text-4xl md:text-7xl md:pl-20 font-bold uppercase'>Affiliate Program</h1>
                 <p className='text-lg leading-6 md:pl-20 md:text-2xl md:leading-normal'>We are excited to present our Affiliate Program for cutting-edge Smart Business Card. This program is designed to create a mutually beneficial partnership, allowing reseller to Tap into a growing market and offer innovative smart business card service to their clients.</p>
+            </motion.span>
+            <div className='h-2/3 aspect-square top-1/2 mt-6 -ml-3 left-4/7 absolute -translate-y-1/2 flex items-center justify-center perspective-distant'>
+                <span className='h-20 w-20 rounded-full absolute top-1/2 left-1/2 -translate-1/2 waterEffect' style={{ animationDelay: "0.5s" }}></span>
+                <span className='h-28 w-28 rounded-full absolute top-1/2 left-1/2 -translate-1/2 waterEffect' style={{ animationDelay: "0.55s" }}></span>
+                <span className='h-36 w-36 rounded-full absolute top-1/2 left-1/2 -translate-1/2 waterEffect' style={{ animationDelay: "0.6s" }}></span>
+                <span className='h-44 w-44 rounded-full absolute top-1/2 left-1/2 -translate-1/2 waterEffect' style={{ animationDelay: "0.65s" }}></span>
+                <span className='h-52 w-52 rounded-full absolute top-1/2 left-1/2 -translate-1/2 waterEffect' style={{ animationDelay: "0.7s" }}></span>
+                <span className='h-60 w-60 rounded-full absolute top-1/2 left-1/2 -translate-1/2 waterEffect' style={{ animationDelay: "0.75s" }}></span>
+                <span className='h-68 w-68 rounded-full absolute top-1/2 left-1/2 -translate-1/2 waterEffect' style={{ animationDelay: "0.8s" }}></span>
+            </div>
+            <motion.span 
+                ref={section3Ref}
+                initial={{marginTop: '100px', scale: 1.1}}
+                animate={{marginTop: section3Visible ? '50px' : '100px', scale: section3Visible ?  1 : 1.5}}
+                transition={{
+                    duration: 0.5,
+                    ease: 'easeOut',
+                    delay: 0.3
+                }}
+                className='w-80 aspect-square scale-275 -ml-20 left-5/7 top-6/7 absolute -translate-y-1/3'
+            >
+                <Image
+                    height={4096}
+                    width={4096}
+                    alt='affiliate page background'
+                    src='/images/hand.png'
+                    className='h-full w-full z-40 object-contain object-center'
+                />
             </motion.span>
         </div>
         <div ref={section2Ref} className='h-max w-full flex flex-col items-center py-10 z-10 md:py-20'>
