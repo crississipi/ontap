@@ -11,3 +11,5 @@ export interface ProductCardProps {
     hoverable: boolean;
     setClickedItem?: (clickedItem: { imgUrl: string; name: string; desc: string }) => void;
 }
+
+export interface ObserverProps { isInView: boolean; }

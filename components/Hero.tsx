@@ -1,8 +1,9 @@
 "use client"
 
-import React, { useEffect, useState } from 'react'
+import React, { forwardRef, useEffect, useState } from 'react'
 import Image from "next/image";
 import { AnimatePresence, motion } from 'framer-motion';
+import { ObserverProps } from '@/types';
 
 const cardUrls = [
     "/images/card-1.png",
@@ -39,7 +40,7 @@ const heroDetails = [
     },
 ]
 
-const Hero = () => {
+const Hero = forwardRef<HTMLDivElement, ObserverProps>(({ isInView }, ref) => {
   const [card, nextCard] = useState(0);
 
   useEffect(() => {
@@ -51,7 +52,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <div className='h-auto w-full flex flex-col relative select-none text-white pt-10 items-center'>
+    <div ref={ref} className='h-auto min-h-[145vh] md:min-h-auto w-full flex flex-col relative select-none text-white pt-10 items-center'>
         <Image
             priority
             height={2048}
@@ -130,19 +131,29 @@ const Hero = () => {
             </div>
             <div className='w-full grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-5 px-5 pt-10'>
                 {heroDetails.map((details, i) => (
-                    <span key={i} className='flex flex-col gap-1 px-3 py-2 rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm'>
-                        <h3 className='text-blue text-lg'>{details.name}</h3>
-                        <p className='leading-5 text-base'>{details.text}</p>
-                    </span>
-                ))}
-            </div>
+                    <motion.span 
+                        key={i} 
+                        className='flex flex-col gap-1 px-3 py-2 rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm'
+                        initial={{filter: 'blur(10px)', scale: 0.7}}
+                        animate={{filter: isInView ? 'blur(0px)' : 'blur(10px)',scale: isInView ? 1 : 0.7}}
+                            transition={{
+                            duration: 0.7,
+                            ease: 'easeOut',
+                            delay: i/4
+                        }}
+                    >
+                            <h3 className='text-blue text-lg'>{details.name}</h3>
+                            <p className='leading-5 text-base'>{details.text}</p>
+                        </motion.span>
+                    ))}
+                </div>
         </div>
         <button 
             type="button"
-            className='py-3 px-12 mb-0.5 w-min rounded-t-md bg-light-blue z-20 text-black font-semibold text-lg tracking-wider hover:bg-blue focus:bg-blue hover:text-white focus:text-white ease-out duration-200'
+            className='mt-auto py-3 px-12 mb-0.5 w-min rounded-t-md bg-light-blue z-20 text-black font-semibold text-lg tracking-wider hover:bg-blue focus:bg-blue hover:text-white focus:text-white ease-out duration-200'
         >LOGIN</button>
     </div>
-  )
-}
+  );
+});
 
-export default Hero
+export default Hero;

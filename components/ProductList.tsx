@@ -58,11 +58,11 @@ const ProductCardInfo = [
 
 const ProductList = () => {
   const [inquire, setInquireItem] = useState(false);
-  const [clickedItem, setClickedItem] = useState<any>(null); // store clicked product data
+  const [clickedItem, setClickedItem] = useState<any>(null); 
   
   return (
     <section className='min-h-[100vh] w-full flex flex-col items-center justify-center py-16 bg-neutral-50'>
-      <h1 className='z-10 w-full text-center text-3xl text-black font-semibold md:text-5xl'>OnTap BizCard Products</h1>
+      <h1 className='z-10 w-full text-center text-2xl mt-10 text-black font-semibold md:text-5xl'>OnTap BizCard Products</h1>
       
       <div className='w-full md:w-3/4 h-full grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-7 px-3 py-8 md:px-10'>
         {ProductCardInfo[0].map((val,i) => (
@@ -80,7 +80,7 @@ const ProductList = () => {
         ))}
       </div>
       
-      <h2 className='z-10 w-full text-center text-3xl text-black font-semibold md:text-5xl md:mt-10'>Other Products</h2>
+      <h2 className='z-10 w-full text-center text-2xl mt-10 text-black font-semibold md:text-5xl'>Other Products</h2>
       <div className='w-full md:w-3/4 h-full grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-7 px-3 md:px-10 py-8'>
         {ProductCardInfo[1].map((val,i) => (
           <ProductCard 
@@ -109,7 +109,7 @@ const ProductList = () => {
         />
       )}
     </section>
-  )
-}
+  );
+};
 
 export default ProductList

@@ -9,6 +9,7 @@ import AffiliateProgramPage from "./AffiliateProgramPage";
 import AboutUs from "./AboutUs";
 import ProductList from "./ProductList";
 import InquireItem from "./InquireItem";
+import FAQs from "./FAQs";
 
 export {
     Header, 
@@ -21,5 +22,6 @@ export {
     AffiliateProgramPage,
     AboutUs,
     ProductList,
-    InquireItem
+    InquireItem,
+    FAQs
 }

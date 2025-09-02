@@ -8,7 +8,7 @@ interface FooterProps {
 
 const Footer = ({ setPage }: FooterProps) => {
   return (
-    <footer className='w-full grid grid-cols-6 px-5 md:px-20 py-10 bg-footer-bg text-white gap-5'>
+    <footer className='z-50 w-full grid grid-cols-6 px-5 md:px-20 py-10 bg-footer-bg text-white gap-5'>
         <div className='col-span-2 flex flex-col gap-5 justify-center items-center'>
             <Image
                 priority
@@ -56,18 +56,15 @@ const Footer = ({ setPage }: FooterProps) => {
                 className='md:text-lg text-left hover:text-light-blue focus:text-light-blue ease-out duration-200'
                 onClick={() => setPage(5)}
             >About Us</button>
-            <a 
-                href="#" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className='md:text-lg hover:text-light-blue focus:text-light-blue ease-out duration-200'
-            >Contact Us</a>
-            <a 
-                href="#" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className='md:text-lg hover:text-light-blue focus:text-light-blue ease-out duration-200'
-            >FAQs</a>
+            <button 
+                type='button'
+                className='text-left md:text-lg hover:text-light-blue focus:text-light-blue ease-out duration-200'
+            >Contact Us</button>
+            <button
+                type='button'
+                className='text-left md:text-lg hover:text-light-blue focus:text-light-blue ease-out duration-200'
+                onClick={() => setPage(2)}
+            >FAQs</button>
             <a 
                 href="#" 
                 target="_blank" 
