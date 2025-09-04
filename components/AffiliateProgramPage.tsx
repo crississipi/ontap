@@ -57,13 +57,13 @@ const AffiliateProgramPage = () => {
                 <p className='text-lg leading-6 md:pl-20 md:text-2xl md:leading-normal'>We are excited to present our Affiliate Program for cutting-edge Smart Business Card. This program is designed to create a mutually beneficial partnership, allowing reseller to Tap into a growing market and offer innovative smart business card service to their clients.</p>
             </motion.span>
             <div className='h-2/3 aspect-square top-1/2 mt-6 -ml-3 left-4/7 absolute -translate-y-1/2 flex items-center justify-center perspective-distant'>
-                <span className='h-20 w-20 rounded-full absolute top-1/2 left-1/2 -translate-1/2 waterEffect' style={{ animationDelay: "0.5s" }}></span>
-                <span className='h-28 w-28 rounded-full absolute top-1/2 left-1/2 -translate-1/2 waterEffect' style={{ animationDelay: "0.55s" }}></span>
-                <span className='h-36 w-36 rounded-full absolute top-1/2 left-1/2 -translate-1/2 waterEffect' style={{ animationDelay: "0.6s" }}></span>
-                <span className='h-44 w-44 rounded-full absolute top-1/2 left-1/2 -translate-1/2 waterEffect' style={{ animationDelay: "0.65s" }}></span>
-                <span className='h-52 w-52 rounded-full absolute top-1/2 left-1/2 -translate-1/2 waterEffect' style={{ animationDelay: "0.7s" }}></span>
-                <span className='h-60 w-60 rounded-full absolute top-1/2 left-1/2 -translate-1/2 waterEffect' style={{ animationDelay: "0.75s" }}></span>
-                <span className='h-68 w-68 rounded-full absolute top-1/2 left-1/2 -translate-1/2 waterEffect' style={{ animationDelay: "0.8s" }}></span>
+                <span className='h-16 w-16 rounded-full absolute top-1/2 left-1/2 -translate-1/2 waterEffect' style={{ animationDelay: "0.5s" }}></span>
+                <span className='h-24 w-24 rounded-full absolute top-1/2 left-1/2 -translate-1/2 waterEffect' style={{ animationDelay: "0.55s" }}></span>
+                <span className='h-32 w-32 rounded-full absolute top-1/2 left-1/2 -translate-1/2 waterEffect' style={{ animationDelay: "0.6s" }}></span>
+                <span className='h-40 w-40 rounded-full absolute top-1/2 left-1/2 -translate-1/2 waterEffect' style={{ animationDelay: "0.65s" }}></span>
+                <span className='h-48 w-48 rounded-full absolute top-1/2 left-1/2 -translate-1/2 waterEffect' style={{ animationDelay: "0.7s" }}></span>
+                <span className='h-56 w-56 rounded-full absolute top-1/2 left-1/2 -translate-1/2 waterEffect' style={{ animationDelay: "0.75s" }}></span>
+                <span className='h-64 w-64 rounded-full absolute top-1/2 left-1/2 -translate-1/2 waterEffect' style={{ animationDelay: "0.8s" }}></span>
             </div>
             <motion.span 
                 ref={section3Ref}

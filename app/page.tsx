@@ -1,37 +1,13 @@
 "use client";
 
-import { About, AboutUs, ClientList, FAQs, FillUpForm, Footer, Header, Hero, ProductList, VideoTutorial } from "@/components";
+import { About, AboutUs, ClientList, FAQs, FillUpForm, Footer, Header, Hero, ProductList, Starting, VideoTutorial } from "@/components";
 import AffiliateProgramPage from "@/components/AffiliateProgramPage";
-import { JSX, useEffect, useRef, useState } from "react";
-
-function useInView(threshold = 0.1) {
-  const ref = useRef<HTMLDivElement | null>(null);
-  const [isInView, setIsInView] = useState(false);
-
-  useEffect(() => {
-    if (!ref.current) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => setIsInView(entry.isIntersecting),
-      { threshold }
-    );
-
-    observer.observe(ref.current);
-
-    return () => {
-      if (ref.current) observer.unobserve(ref.current);
-    };
-  }, [threshold]);
-
-  return { ref, isInView };
-}
+import { AnimatePresence } from "framer-motion";
+import { JSX, useEffect, useState } from "react";
 
 export default function Home() {
   const [page, setPage] = useState(0);
-  
-  const { ref: heroRef, isInView: heroVisible } = useInView();
-  const { ref: videoTutorialRef, isInView: videoTutorialVisible } = useInView();
-  const { ref: fillUpRef, isInView: fillUpVisible } = useInView();
+  const [endWarping, endWarpingNow] = useState(false);
 
   const SectionPage: Record<number, JSX.Element> = {
     1: <AffiliateProgramPage />,
@@ -40,19 +16,34 @@ export default function Home() {
     5: <AboutUs />
   }
 
+  useEffect(() => {  
+      const stopWarp = setTimeout(() => {
+          endWarpingNow(true)
+      }, 8000);
+  
+      return () => {
+          clearTimeout(stopWarp);
+      };
+    }, []);
+
   return (
-    <main className="min-h-[100vh] h-auto w-full flex flex-col items-center relative overflow-x-hidden p-0 m-0">
+    <main className='min-h-[100vh] h-auto w-full flex flex-col items-center relative overflow-x-hidden p-0 m-0 select-none'>
       <Header setPage={setPage}/>
       {page === 0 ? (
         <>
-          <Hero ref={heroRef} isInView={heroVisible}/>
-          <About />
-          <VideoTutorial ref={videoTutorialRef} isInView={videoTutorialVisible}/>
-          <FillUpForm ref={fillUpRef} isInView={fillUpVisible}/>
-          <ClientList />
+          <AnimatePresence mode='wait'>{!endWarping && (<Starting/>)}</AnimatePresence>
+          <Hero endWarping={endWarping}/>
+          {endWarping && (
+          <>
+            <About />
+            <VideoTutorial />
+            <FillUpForm />
+            <ClientList />
+          </>
+          )}
         </>
-      ) : SectionPage[page]}
-      <Footer setPage={setPage}/>
+        ) : SectionPage[page]}
+      {endWarping && (<Footer setPage={setPage}/>)}
     </main>
   );
 }

@@ -10,6 +10,7 @@ import AboutUs from "./AboutUs";
 import ProductList from "./ProductList";
 import InquireItem from "./InquireItem";
 import FAQs from "./FAQs";
+import Starting from "./Starting";
 
 export {
     Header, 
@@ -23,5 +24,6 @@ export {
     AboutUs,
     ProductList,
     InquireItem,
-    FAQs
+    FAQs,
+    Starting
 }

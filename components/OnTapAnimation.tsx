@@ -40,25 +40,25 @@ const OnTapAnimation = () => {
             />
         </div>
         <div className={`h-full ${section1Visible ? 'min-w-42 max-w-42' : 'min-w-0 max-w-0 overflow-hidden'} flex items-center relative ml-7 perspective-distant transform-3d ease-out duration-500`}>
-            <span className='h-4 w-4 rounded-full border-2 border-blue absolute pulseGrow'></span>
-            <span className='h-12 w-12 rounded-full border-2 border-blue absolute left-1 pulseGrow' style={{ animationDelay: "0.1s" }}></span>
-            <span className='h-20 w-20 rounded-full border-2 border-blue absolute left-2 pulseGrow' style={{ animationDelay: "0.15s" }}></span>
-            <span className='h-28 w-28 rounded-full border-2 border-blue absolute left-3 pulseGrow' style={{ animationDelay: "0.2s" }}></span>
-            <span className='h-36 w-36 rounded-full border-2 border-blue absolute left-4 pulseGrow' style={{ animationDelay: "0.25s" }}></span>
-            <span className='h-42 w-42 rounded-full border-2 border-blue absolute left-5 pulseGrow' style={{ animationDelay: "0.3s" }}></span>
-            <span className='h-50 w-50 rounded-full border-2 border-blue absolute left-6 pulseGrow' style={{ animationDelay: "0.35s" }}></span>
-            <span className='h-58 w-58 rounded-full border-2 border-blue absolute left-7 pulseGrow' style={{ animationDelay: "0.4s" }}></span>
-            <span className='h-64 w-64 rounded-full border-2 border-blue absolute left-8 pulseGrow' style={{ animationDelay: "0.45s" }}></span>
-            <span className='h-72 w-72 rounded-full border-2 border-blue absolute left-9 pulseGrow' style={{ animationDelay: "0.5s" }}></span>
-            <span className='h-80 w-80 rounded-full border-2 border-blue absolute left-10 pulseGrow' style={{ animationDelay: "0.55s" }}></span>
-            <span className='h-88 w-88 rounded-full border-2 border-blue absolute left-11 pulseGrow' style={{ animationDelay: "0.6s" }}></span>
+            <span className='h-4 w-4 rounded-full absolute pulseGrow'></span>
+            <span className='h-12 w-12 rounded-full absolute left-1 pulseGrow' style={{ animationDelay: "0.05s" }}></span>
+            <span className='h-20 w-20 rounded-full absolute left-2 pulseGrow' style={{ animationDelay: "0.1s" }}></span>
+            <span className='h-28 w-28 rounded-full absolute left-3 pulseGrow' style={{ animationDelay: "0.1.5s" }}></span>
+            <span className='h-36 w-36 rounded-full absolute left-4 pulseGrow' style={{ animationDelay: "0.2s" }}></span>
+            <span className='h-42 w-42 rounded-full absolute left-5 pulseGrow' style={{ animationDelay: "0.25s" }}></span>
+            <span className='h-50 w-50 rounded-full absolute left-6 pulseGrow' style={{ animationDelay: "0.3s" }}></span>
+            <span className='h-58 w-58 rounded-full absolute left-7 pulseGrow' style={{ animationDelay: "0.35s" }}></span>
+            <span className='h-64 w-64 rounded-full absolute left-8 pulseGrow' style={{ animationDelay: "0.4s" }}></span>
+            <span className='h-72 w-72 rounded-full absolute left-9 pulseGrow' style={{ animationDelay: "0.45s" }}></span>
+            <span className='h-80 w-80 rounded-full absolute left-10 pulseGrow' style={{ animationDelay: "0.5s" }}></span>
+            <span className='h-88 w-88 rounded-full absolute left-11 pulseGrow' style={{ animationDelay: "0.55s" }}></span>
         </div>
         <span className={`h-full w-3/4 rotate-y-45 border-2 border-blue absolute ${section1Visible ? 'left-9/10 scale-120 z-60' : 'left-1/2 -translate-x-1/2 scale-50 z-30'} rounded-4xl ease-out duration-500 delay-100`}></span>
         <span className={`h-full w-3/4 rotate-y-45 border-2 border-blue absolute  ${section1Visible ? 'left-5/7 scale-110 z-60' : 'left-1/2 -translate-x-1/2 scale-50 z-30'} rounded-4xl ease-out duration-500 delay-150`}></span>
         <span className={`h-full w-3/4 rotate-y-45 border-2 border-blue absolute  z-40 ${section1Visible ? 'left-1/3 scale-90' : 'left-1/2 -translate-x-1/2 scale-50'} rounded-4xl ease-out duration-500 delay-200`}></span>
         <span className={`h-full w-3/4 rotate-y-45 border-2 border-blue absolute z-40 ${section1Visible ? 'left-1/6 scale-80' : 'left-1/2 -translate-x-1/2 scale-50'} rounded-4xl ease-out duration-500 delay-250`}></span>
-        <span className={`h-full w-3/4 rotate-y-45 border-2 border-blue absolute z-40 ${section1Visible ? 'left-0 scale-70' : 'left-1/2 -translate-x-1/2 scale-50'} rounded-4xl ease-out duration-500 delay-300`}></span>
-        <span className={`h-full w-3/4 rotate-y-45 border-2 border-blue absolute z-40 ${section1Visible ? '-left-1/7 scale-60' : 'left-1/2 -translate-x-1/2 scale-50'} rounded-4xl ease-out duration-500 delay-350`}></span>
+        <span className={`h-full w-3/4 rotate-y-45 border-2 border-blue absolute z-40 ${section1Visible ? 'left-0 scale-70' : 'left-1/2 -translate-x-1/2 scale-50'} rounded-3xl ease-out duration-500 delay-300`}></span>
+        <span className={`h-full w-3/4 rotate-y-45 border-2 border-blue absolute z-40 ${section1Visible ? '-left-1/7 scale-60' : 'left-1/2 -translate-x-1/2 scale-50'} rounded-2xl ease-out duration-500 delay-350`}></span>
         <Image
             height={500}
             width={500}

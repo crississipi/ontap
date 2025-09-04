@@ -1,6 +1,7 @@
-import React, { forwardRef } from 'react'
+"use client"
+
+import React, { useEffect, useRef, useState } from 'react'
 import Input from './Input'
-import { ObserverProps } from '@/types'
 import { motion } from 'framer-motion';
 
 const InputData = [
@@ -35,15 +36,39 @@ const InputData = [
         type: 'text'
     },
 ]
-const FillUpForm = forwardRef<HTMLDivElement, ObserverProps>(({ isInView }, ref) => {
+
+function useInView(threshold = 0.1) {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const [isInView, setIsInView] = useState(false);
+
+  useEffect(() => {
+    if (!ref.current) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsInView(entry.isIntersecting),
+      { threshold }
+    );
+
+    observer.observe(ref.current);
+
+    return () => {
+      if (ref.current) observer.unobserve(ref.current);
+    };
+  }, [threshold]);
+
+  return { ref, isInView };
+}
+const FillUpForm = () => {
+  const { ref: fillUpRef, isInView: fillUpVisible } = useInView();
+
   return (
-    <div ref={ref} className='w-full flex flex-col py-20 items-center gap-5'>
+    <div ref={fillUpRef} className='w-full flex flex-col py-20 items-center gap-5'>
         <h2 className='w-full text-center text-3xl font-bold'>To Arrange a Demonstration <span className='text-dark-blue'>or to Place Bulk Orders</span></h2>
         <p className='text-lg font-bold'>Kindly fill up this form</p>
         <motion.form 
             className='w-9/10 md:w-1/3 p-5 bg-neutral-100 rounded-md gap-5 flex flex-col'
             initial={{ y: '100%'}}
-            animate={{ y: isInView ? '0%' : '100%'}}
+            animate={{ y: fillUpVisible ? '0%' : '100%'}}
             transition={{
                 duration: 1,
                 ease: 'easeOut',
@@ -67,6 +92,6 @@ const FillUpForm = forwardRef<HTMLDivElement, ObserverProps>(({ isInView }, ref)
         </motion.form>   
     </div>
   );
-});
+};
 
 export default FillUpForm

@@ -1,11 +1,36 @@
-import React, { forwardRef } from 'react'
+"use client";
+
+import React, { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
-import { ObserverProps } from '@/types'
 import { motion } from 'framer-motion';
 
-const VideoTutorial = forwardRef<HTMLDivElement, ObserverProps>(({ isInView }, ref) => {
+function useInView(threshold = 0.1) {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const [isInView, setIsInView] = useState(false);
+
+  useEffect(() => {
+    if (!ref.current) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsInView(entry.isIntersecting),
+      { threshold }
+    );
+
+    observer.observe(ref.current);
+
+    return () => {
+      if (ref.current) observer.unobserve(ref.current);
+    };
+  }, [threshold]);
+
+  return { ref, isInView };
+}
+
+const VideoTutorial = () => {
+  const { ref: videoTutorialRef, isInView: videoTutorialVisible } = useInView();
+
   return (
-    <div ref={ref} className='h-auto w-full flex flex-col items-center gap-10 py-20 relative'>
+    <div ref={videoTutorialRef} className='h-auto w-full flex flex-col items-center gap-10 py-20 relative'>
         <Image
             height={1000}
             width={1000}
@@ -17,7 +42,7 @@ const VideoTutorial = forwardRef<HTMLDivElement, ObserverProps>(({ isInView }, r
         <motion.div
           className='w-full h-80 bg-gray-400 z-20 md:w-1/2 md:h-120 md:rounded-md'
           initial={{scale: 0.8}}
-          animate={{scale: isInView ? 1 : 0.8}}
+          animate={{scale: videoTutorialVisible ? 1 : 0.8}}
           transition={{
             duration: 0.7,
             ease: 'easeOut',
@@ -28,6 +53,6 @@ const VideoTutorial = forwardRef<HTMLDivElement, ObserverProps>(({ isInView }, r
         </motion.div>
     </div>
   );
-});
+};
 
 export default VideoTutorial

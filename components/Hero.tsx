@@ -1,9 +1,8 @@
 "use client"
 
-import React, { forwardRef, useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Image from "next/image";
 import { AnimatePresence, motion } from 'framer-motion';
-import { ObserverProps } from '@/types';
 
 const cardUrls = [
     "/images/card-1.png",
@@ -40,19 +39,49 @@ const heroDetails = [
     },
 ]
 
-const Hero = forwardRef<HTMLDivElement, ObserverProps>(({ isInView }, ref) => {
+function useInView(threshold = 0.1) {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const [isInView, setIsInView] = useState(false);
+
+  useEffect(() => {
+    if (!ref.current) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsInView(entry.isIntersecting),
+      { threshold }
+    );
+
+    observer.observe(ref.current);
+
+    return () => {
+      if (ref.current) observer.unobserve(ref.current);
+    };
+  }, [threshold]);
+
+  return { ref, isInView };
+}
+
+interface StartingProps {
+    endWarping: boolean;
+}
+
+const Hero = ({ endWarping }: StartingProps) => {
   const [card, nextCard] = useState(0);
+  const { ref: heroRef, isInView: heroVisible } = useInView();
 
   useEffect(() => {
     const interval = setInterval(() => {
         nextCard(prev => (prev + 1) % cardUrls.length);
     }, 3000);
 
-    return () => clearInterval(interval);
+    return () => {
+        clearInterval(interval);
+    };
   }, []);
 
   return (
-    <div ref={ref} className='h-auto min-h-[145vh] md:min-h-auto w-full flex flex-col relative select-none text-white pt-10 items-center'>
+    <div ref={heroRef} className='h-auto min-h-[145vh] md:min-h-auto w-full relative flex flex-col select-none text-white pt-10 items-center'>
+        
         <Image
             priority
             height={2048}
@@ -61,39 +90,369 @@ const Hero = forwardRef<HTMLDivElement, ObserverProps>(({ isInView }, ref) => {
             src='/images/ontap-hero-bg.png'
             className='h-full w-full object-cover pt-5 absolute top-1/2 left-1/2 -translate-1/2'
         />
-        <div className='z-40 flex flex-col items-center pt-10 pb-10'>
-            <Image
-                priority
-                height={500}
-                width={500}
-                alt='ontap creatives logo'
-                src='/images/ontap-logo-1.png'
-                className='h-auto w-32 md:w-50 object-cover pt-5'
-            />
-            <h1 className='text-4xl md:text-7xl mt-5 md:mt-5 text-blue'>Smart Business Card</h1>
-            <h2 className='text-base text-center px-3 mt-5 md:text-2xl md:w-2/3'>Turn every interaction into an opportunity for growth. Embrace the future of networking with our Digital Business Card - your key to a world of endless possibilities</h2>
-            <div className='hidden h-auto w-full md:grid md:grid-cols-2 lg:grid-cols-4 overflow-hidden md:my-18 relative'>
-                { cardUrls.map((val, i) => (
-                    <motion.div
-                        key={i}
-                        className='flex items-start justify-center'
-                        initial={{x: 9999}}
-                        animate={{x: 0}}
+        <div className='z-30 flex flex-col items-center pt-10 pb-10'>
+            <motion.div 
+            initial={{scale: 0, filter: 'blur(2px)'}}
+            animate={{scale: 1, filter: 'blur(0px)'}}
+            transition={{
+                duration: 1.5,
+                ease: 'easeOut',
+                delay: endWarping ? 0 : 3.5
+            }}
+            className='w-full flex flex-col items-center'
+            >
+                <Image
+                    priority
+                    height={500}
+                    width={500}
+                    alt='ontap creatives logo'
+                    src='/images/ontap-logo-1.png'
+                    className='h-auto w-32 md:w-50 object-cover pt-5'
+                />
+                <h1 className='text-4xl md:text-7xl mt-5 md:mt-5 text-blue'>Smart Business Card</h1>
+                <h2 className='text-base text-center px-3 mt-5 md:text-2xl md:w-2/3'>Turn every interaction into an opportunity for growth. Embrace the future of networking with our Digital Business Card - your key to a world of endless possibilities</h2>
+            </motion.div>
+            <div className='hidden h-70 w-full md:grid md:grid-cols-2 lg:grid-cols-4 md:my-18 relative [perspective:1000px]'>
+                <motion.div
+                    initial={{scale: 0, x: 0, y: -200}}
+                    animate={{scale: 1, x: -750, y: 0}}
+                    transition={{
+                        duration: 1.5,
+                        ease: 'linear',
+                        delay: endWarping ? 0 : 4
+                    }}
+                    className='absolute w-72 h-42 top-1/2 -translate-1/2 left-1/2 z-50 rounded-xl [perspective:1000px]'
+                >
+                    <motion.div 
+                        initial={{
+                            rotateX: '180deg',
+                            rotateY: '-90deg',
+                            rotateZ: '-35deg'
+                        }}
+                        animate={{
+                            rotateX: '20deg',
+                            rotateY: '45deg',
+                            rotateZ: '-25deg'
+                        }}
                         transition={{
                             duration: 1.5,
-                            ease: 'easeOut',
-                            delay: i * 0.3
+                            ease: 'linear',
+                            delay: endWarping ? 0 : 4
                         }}
+                        className='h-full w-full overflow-hidden rounded-xl'
                     >
-                        <Image
-                            height={500}
-                            width={500}
-                            alt='ontap creatives cards'
-                            src={val}
-                            className='h-auto w-42 md:w-64 object-contain pt-5 object-center'
-                        />
+                        <div className="relative w-full h-full transition-transform duration-700 transform-3d shadow-md">
+                            <div className="absolute inset-0 rotate-y-180">
+                                <Image
+                                    src="/images/card-cover.png"
+                                    alt="Front"
+                                    fill
+                                    className="object-cover rounded-xl shadow-lg backface-hidden"
+                                />
+                            </div>
+                            <div className="absolute inset-0">
+                                <Image
+                                    src="/images/card-cover.png"
+                                    alt="Back"
+                                    fill
+                                    className="object-cover rounded-xl shadow-lg backface-hidden"
+                                />
+                            </div>
+                        </div>
                     </motion.div>
-                ))}
+                    <motion.div 
+                        initial={{
+                            rotateX: '180deg',
+                            rotateY: '-90deg',
+                            rotateZ: '-35deg'
+                        }}
+                        animate={{
+                            rotateX: '20deg',
+                            rotateY: '45deg',
+                            rotateZ: '-25deg'
+                        }}
+                        transition={{
+                            duration: 1.5,
+                            ease: 'linear',
+                            delay: endWarping ? 0 : 4.5
+                        }}
+                        className='h-full w-full overflow-hidden rounded-xl absolute top-1/5 left-1/5'
+                    >
+                        <div className="relative w-full h-full transition-transform duration-700 transform-3d shadow-md">
+                            <div className="absolute inset-0 rotate-y-180">
+                                <Image
+                                    src="/images/card-cover.png"
+                                    alt="Front"
+                                    fill
+                                    className="object-cover rounded-xl shadow-lg backface-hidden"
+                                />
+                            </div>
+                            <div className="absolute inset-0">
+                                <Image
+                                    src="/images/card-cover.png"
+                                    alt="Back"
+                                    fill
+                                    className="object-cover rounded-xl shadow-lg backface-hidden"
+                                />
+                            </div>
+                        </div>
+                    </motion.div>
+                </motion.div>
+                <motion.div
+                    initial={{scale: 0, x: 0, y: -200}}
+                    animate={{scale: 1, x: -250, y: 0}}
+                    transition={{
+                        duration: 1.5,
+                        ease: 'linear',
+                        delay: endWarping ? 0.5 : 4.5
+                    }}
+                    className='absolute w-72 h-42 top-1/2 -translate-1/2 left-1/2 z-50 rounded-xl [perspective:1000px]'
+                >
+                    <motion.div 
+                        initial={{
+                            rotateX: '180deg',
+                            rotateY: '-90deg',
+                            rotateZ: '-35deg'
+                        }}
+                        animate={{
+                            rotateX: '20deg',
+                            rotateY: '45deg',
+                            rotateZ: '-25deg'
+                        }}
+                        transition={{
+                            duration: 1.5,
+                            ease: 'linear',
+                            delay: endWarping ? 0.5 : 4.5
+                        }}
+                        className='h-full w-full overflow-hidden rounded-xl'
+                    >
+                        <div className="relative w-full h-full transition-transform duration-700 transform-3d shadow-md">
+                            <div className="absolute inset-0 rotate-y-180">
+                                <Image
+                                    src="/images/card-cover.png"
+                                    alt="Front"
+                                    fill
+                                    className="object-cover rounded-xl shadow-lg backface-hidden"
+                                />
+                            </div>
+                            <div className="absolute inset-0">
+                                <Image
+                                    src="/images/card-cover.png"
+                                    alt="Back"
+                                    fill
+                                    className="object-cover rounded-xl shadow-lg backface-hidden"
+                                />
+                            </div>
+                        </div>
+                    </motion.div>
+                    <motion.div 
+                        initial={{
+                            rotateX: '180deg',
+                            rotateY: '-90deg',
+                            rotateZ: '-35deg'
+                        }}
+                        animate={{
+                            rotateX: '20deg',
+                            rotateY: '45deg',
+                            rotateZ: '-25deg'
+                        }}
+                        transition={{
+                            duration: 1.5,
+                            ease: 'linear',
+                            delay: endWarping ? 0.5 : 4.5
+                        }}
+                        className='h-full w-full overflow-hidden rounded-xl absolute top-1/5 left-1/5'
+                    >
+                        <div className="relative w-full h-full transition-transform duration-700 transform-3d shadow-md">
+                            <div className="absolute inset-0 rotate-y-180">
+                                <Image
+                                    src="/images/card-cover.png"
+                                    alt="Front"
+                                    fill
+                                    className="object-cover rounded-xl shadow-lg backface-hidden"
+                                />
+                            </div>
+                            <div className="absolute inset-0">
+                                <Image
+                                    src="/images/card-cover.png"
+                                    alt="Back"
+                                    fill
+                                    className="object-cover rounded-xl shadow-lg backface-hidden"
+                                />
+                            </div>
+                        </div>
+                    </motion.div>
+                </motion.div>
+                <motion.div
+                    initial={{scale: 0, x: 0, y: -200}}
+                    animate={{scale: 1, x: 250, y: 0}}
+                    transition={{
+                        duration: 1.5,
+                        ease: 'linear',
+                        delay: endWarping ? 1 : 5
+                    }}
+                    className='absolute w-72 h-42 top-1/2 -translate-1/2 left-1/2 z-50 rounded-xl [perspective:1000px]'
+                >
+                    <motion.div 
+                        initial={{
+                            rotateX: '180deg',
+                            rotateY: '-90deg',
+                            rotateZ: '-35deg'
+                        }}
+                        animate={{
+                            rotateX: '20deg',
+                            rotateY: '45deg',
+                            rotateZ: '-25deg'
+                        }}
+                        transition={{
+                            duration: 1.5,
+                            ease: 'linear',
+                            delay: endWarping ? 1 : 5
+                        }}
+                        className='h-full w-full overflow-hidden rounded-xl'
+                    >
+                        <div className="relative w-full h-full transition-transform duration-700 transform-3d shadow-md">
+                            <div className="absolute inset-0 rotate-y-180">
+                                <Image
+                                    src="/images/card-cover.png"
+                                    alt="Front"
+                                    fill
+                                    className="object-cover rounded-xl shadow-lg backface-hidden"
+                                />
+                            </div>
+                            <div className="absolute inset-0">
+                                <Image
+                                    src="/images/card-cover.png"
+                                    alt="Back"
+                                    fill
+                                    className="object-cover rounded-xl shadow-lg backface-hidden"
+                                />
+                            </div>
+                        </div>
+                    </motion.div>
+                    <motion.div 
+                        initial={{
+                            rotateX: '180deg',
+                            rotateY: '-90deg',
+                            rotateZ: '-35deg'
+                        }}
+                        animate={{
+                            rotateX: '20deg',
+                            rotateY: '45deg',
+                            rotateZ: '-25deg'
+                        }}
+                        transition={{
+                            duration: 1.5,
+                            ease: 'linear',
+                            delay: endWarping ? 1 : 4.5
+                        }}
+                        className='h-full w-full overflow-hidden rounded-xl absolute top-1/5 left-1/5'
+                    >
+                        <div className="relative w-full h-full transition-transform duration-700 transform-3d shadow-md">
+                            <div className="absolute inset-0 rotate-y-180">
+                                <Image
+                                    src="/images/card-cover.png"
+                                    alt="Front"
+                                    fill
+                                    className="object-cover rounded-xl shadow-lg backface-hidden"
+                                />
+                            </div>
+                            <div className="absolute inset-0">
+                                <Image
+                                    src="/images/card-cover.png"
+                                    alt="Back"
+                                    fill
+                                    className="object-cover rounded-xl shadow-lg backface-hidden"
+                                />
+                            </div>
+                        </div>
+                    </motion.div>
+                </motion.div>
+                <motion.div
+                    initial={{scale: 0, x: 0, y: -200}}
+                    animate={{scale: 1, x: 750, y: 0}}
+                    transition={{
+                        duration: 1.5,
+                        ease: 'linear',
+                        delay: endWarping ? 1.5 : 5.5
+                    }}
+                    className='absolute w-72 h-42 top-1/2 -translate-1/2 left-1/2 z-50 rounded-xl [perspective:1000px]'
+                >
+                    <motion.div 
+                        initial={{
+                            rotateX: '180deg',
+                            rotateY: '-90deg',
+                            rotateZ: '-35deg'
+                        }}
+                        animate={{
+                            rotateX: '20deg',
+                            rotateY: '45deg',
+                            rotateZ: '-25deg'
+                        }}
+                        transition={{
+                            duration: 1.5,
+                            ease: 'linear',
+                            delay: endWarping ? 1.5 : 5.5
+                        }}
+                        className='h-full w-full overflow-hidden rounded-xl'
+                    >
+                        <div className="relative w-full h-full transition-transform duration-700 transform-3d shadow-md">
+                            <div className="absolute inset-0 rotate-y-180">
+                                <Image
+                                    src="/images/card-cover.png"
+                                    alt="Front"
+                                    fill
+                                    className="object-cover rounded-xl shadow-lg backface-hidden"
+                                />
+                            </div>
+                            <div className="absolute inset-0">
+                                <Image
+                                    src="/images/card-cover.png"
+                                    alt="Back"
+                                    fill
+                                    className="object-cover rounded-xl shadow-lg backface-hidden"
+                                />
+                            </div>
+                        </div>
+                    </motion.div>
+                    <motion.div 
+                        initial={{
+                            rotateX: '180deg',
+                            rotateY: '-90deg',
+                            rotateZ: '-35deg'
+                        }}
+                        animate={{
+                            rotateX: '20deg',
+                            rotateY: '45deg',
+                            rotateZ: '-25deg'
+                        }}
+                        transition={{
+                            duration: 1.5,
+                            ease: 'linear',
+                            delay: endWarping ? 1.5 : 4.5
+                        }}
+                        className='h-full w-full overflow-hidden rounded-xl absolute top-1/5 left-1/5'
+                    >
+                        <div className="relative w-full h-full transition-transform duration-700 transform-3d shadow-md">
+                            <div className="absolute inset-0 rotate-y-180">
+                                <Image
+                                    src="/images/card-cover.png"
+                                    alt="Front"
+                                    fill
+                                    className="object-cover rounded-xl shadow-lg backface-hidden"
+                                />
+                            </div>
+                            <div className="absolute inset-0">
+                                <Image
+                                    src="/images/card-cover.png"
+                                    alt="Back"
+                                    fill
+                                    className="object-cover rounded-xl shadow-lg backface-hidden"
+                                />
+                            </div>
+                        </div>
+                    </motion.div>
+                </motion.div>
             </div>
             <div className='md:hidden flex items-center justify-center w-full overflow-hidden'>
                 <AnimatePresence mode='wait'>
@@ -135,11 +494,11 @@ const Hero = forwardRef<HTMLDivElement, ObserverProps>(({ isInView }, ref) => {
                         key={i} 
                         className='flex flex-col gap-1 px-3 py-2 rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm'
                         initial={{filter: 'blur(10px)', scale: 0.7}}
-                        animate={{filter: isInView ? 'blur(0px)' : 'blur(10px)',scale: isInView ? 1 : 0.7}}
+                        animate={{filter: heroVisible ? 'blur(0px)' : 'blur(10px)',scale: heroVisible ? 1 : 0.7}}
                             transition={{
                             duration: 0.7,
                             ease: 'easeOut',
-                            delay: i/4
+                            delay: endWarping ? i/4 : 5 + (i/4)
                         }}
                     >
                             <h3 className='text-blue text-lg'>{details.name}</h3>
@@ -148,12 +507,19 @@ const Hero = forwardRef<HTMLDivElement, ObserverProps>(({ isInView }, ref) => {
                     ))}
                 </div>
         </div>
-        <a 
+        <motion.a 
+            initial={{y: 50}}
+            animate={{y: 0}}
+            transition={{
+                duration: 0.5,
+                ease: 'easeOut',
+                delay: endWarping ? 0 : 7
+            }}
             href='https://portal.ontap.ph/login'
             className='mt-auto py-3 px-12 mb-0.5 w-min rounded-t-md bg-light-blue z-20 text-black font-semibold text-lg tracking-wider hover:bg-blue focus:bg-blue hover:text-white focus:text-white ease-out duration-200'
-        >LOGIN</a>
+        >LOGIN</motion.a>
     </div>
   );
-});
+};
 
 export default Hero;
