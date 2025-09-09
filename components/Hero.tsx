@@ -80,7 +80,7 @@ const Hero = ({ endWarping }: StartingProps) => {
   }, []);
 
   return (
-    <div ref={heroRef} className='h-auto min-h-[145vh] md:min-h-auto w-full relative flex flex-col select-none text-white pt-10 items-center'>
+    <div ref={heroRef} className='h-auto min-h-[145vh] md:min-h-auto w-full relative flex flex-col select-none text-white pt-10 items-center overflow-hidden'>
         
         <Image
             priority
@@ -454,7 +454,16 @@ const Hero = ({ endWarping }: StartingProps) => {
                     </motion.div>
                 </motion.div>
             </div>
-            <div className='md:hidden flex items-center justify-center w-full overflow-hidden'>
+            <motion.div 
+            initial={{opacity: 0}}
+            animate={{opacity: 1}}
+            transition={{
+                duration: 0.3,
+                ease: 'easeOut',
+                delay: 4
+            }}
+            className='md:hidden flex items-center justify-center w-full overflow-hidden'
+            >
                 <AnimatePresence mode='wait'>
                     {cardUrls.map((val, i) => (
                         i === card && (
@@ -468,7 +477,7 @@ const Hero = ({ endWarping }: StartingProps) => {
                                     duration: 0.5,
                                     type: 'spring',
                                     stiffness: 150,
-                                    damping: 20
+                                    damping: 20,
                                 }}
                             >
                                 <Image
@@ -482,18 +491,28 @@ const Hero = ({ endWarping }: StartingProps) => {
                         )
                     ))}
                 </AnimatePresence>
-            </div>
-            <div className='md:hidden flex w-full items-center justify-center gap-1 mt-10'>
+            </motion.div>
+
+            <motion.div 
+                initial={{opacity: 0}}
+                animate={{opacity: 1}}
+                transition={{
+                    duration: 0.3,
+                    ease: 'easeOut',
+                    delay: 4
+                }}
+                className='md:hidden flex w-full items-center justify-center gap-1 mt-10'
+            >
                 {Array.from({ length: 4 }).map((_, i) => (
                     <span key={i} className={`${i === card ? 'scale-150 mx-1 bg-white' : 'scale-100 bg-white/50'} h-2 w-2 rounded-full ease-in-out duration-200`}></span>
                 ))}
-            </div>
+            </motion.div>
             <div className='w-full grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-5 px-5 pt-10'>
                 {heroDetails.map((details, i) => (
                     <motion.span 
                         key={i} 
                         className='flex flex-col gap-1 px-3 py-2 rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm'
-                        initial={{filter: 'blur(10px)', scale: 0.7}}
+                        initial={{filter: 'blur(10px)', scale: 0}}
                         animate={{filter: heroVisible ? 'blur(0px)' : 'blur(10px)',scale: heroVisible ? 1 : 0.7}}
                             transition={{
                             duration: 0.7,

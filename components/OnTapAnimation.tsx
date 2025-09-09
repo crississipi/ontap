@@ -53,18 +53,18 @@ const OnTapAnimation = () => {
             <span className='h-80 w-80 rounded-full absolute left-10 pulseGrow' style={{ animationDelay: "0.5s" }}></span>
             <span className='h-88 w-88 rounded-full absolute left-11 pulseGrow' style={{ animationDelay: "0.55s" }}></span>
         </div>
-        <span className={`h-full w-3/4 rotate-y-45 border-2 border-blue absolute ${section1Visible ? 'left-9/10 scale-120 z-60' : 'left-1/2 -translate-x-1/2 scale-50 z-30'} rounded-4xl ease-out duration-500 delay-100`}></span>
-        <span className={`h-full w-3/4 rotate-y-45 border-2 border-blue absolute  ${section1Visible ? 'left-5/7 scale-110 z-60' : 'left-1/2 -translate-x-1/2 scale-50 z-30'} rounded-4xl ease-out duration-500 delay-150`}></span>
-        <span className={`h-full w-3/4 rotate-y-45 border-2 border-blue absolute  z-40 ${section1Visible ? 'left-1/3 scale-90' : 'left-1/2 -translate-x-1/2 scale-50'} rounded-4xl ease-out duration-500 delay-200`}></span>
-        <span className={`h-full w-3/4 rotate-y-45 border-2 border-blue absolute z-40 ${section1Visible ? 'left-1/6 scale-80' : 'left-1/2 -translate-x-1/2 scale-50'} rounded-4xl ease-out duration-500 delay-250`}></span>
-        <span className={`h-full w-3/4 rotate-y-45 border-2 border-blue absolute z-40 ${section1Visible ? 'left-0 scale-70' : 'left-1/2 -translate-x-1/2 scale-50'} rounded-3xl ease-out duration-500 delay-300`}></span>
-        <span className={`h-full w-3/4 rotate-y-45 border-2 border-blue absolute z-40 ${section1Visible ? '-left-1/7 scale-60' : 'left-1/2 -translate-x-1/2 scale-50'} rounded-2xl ease-out duration-500 delay-350`}></span>
+        <span className={`h-full w-3/4 rotate-y-45 border-2 border-blue absolute ${section1Visible ? 'md:left-9/10 md:scale-120 left-2/3 scale-110 z-60' : 'left-1/2 -translate-x-1/2 md:scale-50 scale-30 z-30'} rounded-4xl ease-out duration-500 delay-100`}></span>
+        <span className={`h-full w-3/4 rotate-y-45 border-2 border-blue absolute  ${section1Visible ? 'md:left-5/7 md:scale-110 left-1/2 scale-100 z-60' : 'left-1/2 -translate-x-1/2 md:scale-50 scale-30 z-30'} rounded-4xl ease-out duration-500 delay-150`}></span>
+        <span className={`h-full w-3/4 rotate-y-45 border-2 border-blue absolute  z-40 ${section1Visible ? 'md:left-1/3 md:scale-90 left-1/4 scale-85' : 'left-1/2 -translate-x-1/2 md:scale-50 scale-30'} rounded-4xl ease-out duration-500 delay-200`}></span>
+        <span className={`h-full w-3/4 rotate-y-45 border-2 border-blue absolute z-40 ${section1Visible ? 'md:left-1/6 md:scale-80 left-1/8 scale-75' : 'left-1/2 -translate-x-1/2 md:scale-50 scale-30'} rounded-4xl ease-out duration-500 delay-250`}></span>
+        <span className={`h-full w-3/4 rotate-y-45 border-2 border-blue absolute z-40 ${section1Visible ? 'left-0 md:scale-70 scale-65' : 'left-1/2 -translate-x-1/2 md:scale-50 scale-30'} rounded-3xl ease-out duration-500 delay-300`}></span>
+        <span className={`h-full w-3/4 rotate-y-45 border-2 border-blue absolute z-40 ${section1Visible ? 'md:-left-1/7 md:scale-60 -left-1/10 scale-55' : 'left-1/2 -translate-x-1/2 md:scale-50 scale-30'} rounded-2xl ease-out duration-500 delay-350`}></span>
         <Image
             height={500}
             width={500}
             alt='ontap creatives cards'
             src='/images/ontapphone.png'
-            className='w-40 object-cover pt-5 object-center rounded-lg -mt-5 z-50'
+            className={`w-40 object-cover pt-5 object-center rounded-lg -mt-5 z-50 ${!section1Visible && 'mx-auto md:mx-0'}`}
         />
     </div>
   )

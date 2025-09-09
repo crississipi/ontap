@@ -20,7 +20,7 @@ const Starting = () => {
                 ease: 'linear',
                 delay: 2
             }}
-            className='absolute w-2/3 aspect-square top-2/3 -translate-y-1/3 z-30 left-0'
+            className='absolute scale-110 md:scale-100 w-full md:w-2/3 aspect-square top-2/5 md:top-2/3 md:-translate-y-1/3 z-30 md:left-0 md:right-auto right-1/4'
         >
             <motion.div 
                 initial={{x:-999, y: -999}}
@@ -49,7 +49,7 @@ const Starting = () => {
                 ease: 'linear',
                 delay: 2
             }}
-            className='absolute w-3/5 aspect-square top-2/3 -translate-y-1/3 left-3/7 z-20'
+            className='absolute scale-105 md:scale-100 w-full md:w-2/3 aspect-square top-2/5 md:top-2/3 md:-translate-y-1/3 z-20 left-1/3 md:left-2/5'
         >
             <motion.div 
                 initial={{x:999, y: 999}}
