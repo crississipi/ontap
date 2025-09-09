@@ -1,6 +1,6 @@
 "use client";
 
-import { About, AboutUs, ClientList, FAQs, FillUpForm, Footer, Header, Hero, ProductList, Starting, VideoTutorial } from "@/components";
+import { About, AboutUs, ClientList, FAQs, FillUpForm, Footer, Header, Hero, PopUp, ProductList, Starting, VideoTutorial } from "@/components";
 import AffiliateProgramPage from "@/components/AffiliateProgramPage";
 import { AnimatePresence, motion } from "framer-motion";
 import { JSX, useEffect, useState } from "react";
@@ -9,6 +9,7 @@ import { BsQuestionLg } from "react-icons/bs";
 export default function Home() {
   const [page, setPage] = useState(0);
   const [endWarping, endWarpingNow] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
 
   const SectionPage: Record<number, JSX.Element> = {
     1: <AffiliateProgramPage />,
@@ -17,15 +18,27 @@ export default function Home() {
     5: <AboutUs />
   }
 
-  useEffect(() => {  
-      const stopWarp = setTimeout(() => {
-          endWarpingNow(true)
-      }, 8000);
-  
-      return () => {
-          clearTimeout(stopWarp);
-      };
-    }, []);
+useEffect(() => {
+  const stopWarp = setTimeout(() => {
+    endWarpingNow(true);
+  }, 8000);
+
+  const handleScroll = () => {
+    const scrollPosition = window.innerHeight + window.scrollY;
+    const bottom = document.documentElement.scrollHeight;
+
+    if (scrollPosition >= bottom - 2) { // tolerance
+      setShowPopup(true);
+    }
+  };
+
+  window.addEventListener("scroll", handleScroll);
+
+  return () => {
+    clearTimeout(stopWarp);
+    window.removeEventListener("scroll", handleScroll);
+  };
+}, [showPopup]);
 
   return (
     <main className='min-h-[100vh] h-auto w-full flex flex-col items-center relative overflow-x-hidden p-0 m-0 select-none'>
@@ -64,7 +77,7 @@ export default function Home() {
           FAQs
         </motion.button>
       )}
-      
+      {showPopup && <PopUp setShowPopup={setShowPopup}/>}
     </main>
   );
 }

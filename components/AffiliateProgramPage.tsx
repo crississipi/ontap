@@ -74,7 +74,7 @@ const AffiliateProgramPage = () => {
                     ease: 'easeOut',
                     delay: 0.3
                 }}
-                className='w-80 aspect-square scale-275 -ml-20 left-5/7 top-6/7 absolute -translate-y-1/3'
+                className='w-60 md:w-80 aspect-square scale-275 -ml-5 md:-ml-20 left-3/4 md:left-5/7 top-5/6 md:top-6/7 absolute md:-translate-y-1/3'
             >
                 <Image
                     height={4096}

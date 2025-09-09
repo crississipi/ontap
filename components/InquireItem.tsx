@@ -3,9 +3,8 @@
 import React, { useRef, useState } from 'react'
 import ProductCard from './ProductCard'
 import { ProductCardProps, ProductProps } from '@/types';
-import { HiOutlineArrowLongRight, HiOutlineArrowSmallLeft, HiOutlineGlobeAlt, HiOutlineXMark, HiPhone } from 'react-icons/hi2';
+import { HiOutlineArrowLongRight, HiOutlineArrowSmallLeft, HiOutlineXMark, HiPhone } from 'react-icons/hi2';
 import Image from 'next/image';
-import { FaFacebookSquare } from 'react-icons/fa';
 import { HiLocationMarker } from 'react-icons/hi';
 import { TbCaretDownFilled } from 'react-icons/tb';
 
@@ -2324,18 +2323,6 @@ const getInputs = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>)
                             href='tel:+639772473179'                            
                             className='col-span-1 flex gap-2 items-center hover:underline focus:underline ease-out duration-200 text-nowrap'
                         ><HiPhone className='text-xl md:text-2xl'/>+63 977 247 3179</a>
-                        <a
-                            href='https://web.facebook.com/burnboxprinting'
-                            className='col-span-1 flex gap-2 items-center hover:underline focus:underline ease-out duration-200'
-                        ><FaFacebookSquare className='text-2xl text-blue-700'/>/burnboxprinting</a>
-                        <a
-                            href="https://burnboxprinting.com/" 
-                            target="_blank"
-                            className='col-span-1 md:col-span-2 flex gap-2 items-center hover:underline focus:underline ease-out duration-200'
-                        >
-                            <HiOutlineGlobeAlt className='text-2xl text-rose-500'/>
-                            burnboxprinting.com
-                        </a>
                         <a 
                             href="https://www.google.com/maps/place/17+Vatican+City+Dr,+Las+Pi%C3%B1as" 
                             target="_blank"
