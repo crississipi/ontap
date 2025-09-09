@@ -7,6 +7,7 @@ import { HiOutlineArrowLongRight, HiOutlineArrowSmallLeft, HiOutlineXMark, HiPho
 import Image from 'next/image';
 import { HiLocationMarker } from 'react-icons/hi';
 import { TbCaretDownFilled } from 'react-icons/tb';
+import Toast from './Toast';
 
 type ProdCard = ProductCardProps & ProductProps;
 
@@ -1949,23 +1950,19 @@ const getInputs = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>)
   const { name, value } = e.target;
 
   if (name === "contact") {
-    // Step 1: strip non-digits
     let digits = value.replace(/\D/g, "");
 
-    // Step 2: remove country code digits from the front if user typed it manually
-    const countryDigits = countryCode.code.replace(/\D/g, ""); // e.g. "+63" -> "63"
+    const countryDigits = countryCode.code.replace(/\D/g, "");
     if (digits.startsWith(countryDigits)) {
       digits = digits.slice(countryDigits.length);
     }
 
-    // Step 3: enforce maxDigits (truncate input immediately)
     if (countryCode.maxDigits) {
       if (digits.length > countryCode.maxDigits) {
         digits = digits.slice(0, countryCode.maxDigits);
       }
     }
 
-    // Step 4: format with makeFormatter
     let formatted = digits;
     if (countryCode?.format) {
       try {
@@ -1975,13 +1972,10 @@ const getInputs = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>)
       }
     }
 
-    // Step 5: always prefix country code
     formatted = `${countryCode.code} ${formatted}`.trim();
 
-    // Step 6: save formatted string
     storeUserInfo((prev) => ({ ...prev, contact: formatted }));
 
-    // ✅ force update the input’s value (so user can’t type past maxDigits)
     e.target.value = formatted;
 
     return;
@@ -2035,7 +2029,7 @@ const getInputs = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>)
             const data = await res.json();
 
             if (data.success) {
-                alert('OTP Matched.');
+                <Toast icon='success' message='OTP matched.' />
                 nextStep(2);
                 setEmailContent(
                 <>
@@ -2067,7 +2061,7 @@ const getInputs = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>)
                     <strong className="lowercase">{userInfo.email}</strong>
                 </>
                 );
-            } else { alert('OTP not matched.')}
+            } else { <Toast icon='error' message='OTP not matched.' />}
         } catch (err) { console.log(err) };
     } else {
         const messageHtml = emailRef.current?.innerHTML || '';
@@ -2100,11 +2094,11 @@ const getInputs = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>)
             });
             setOtp('');
         } else {
-            alert(`Error: ${data.message}`);
+            <Toast icon='error' message={`Error: ${data.message}`} />
         }
         } catch (error) {
             console.error('Error sending email:', error);
-            alert('An unexpected error occurred.');
+            <Toast icon='error' message='Error sending email. Please try again.' />
         }
     }
     };
@@ -2129,7 +2123,6 @@ const getInputs = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>)
     }
   };
 
-  // clear this and all next inputs
   const handleClick = (index: number) => {
     const otpArray = otp.split("");
     for (let i = index; i < otpArray.length; i++) {
@@ -2314,15 +2307,15 @@ const getInputs = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>)
                         <a
                             href='tel:+0270072412'                            
                             className='col-span-1 flex gap-2 items-center hover:underline focus:underline ease-out duration-200 text-nowrap'
-                        ><HiPhone className='text-xl md:text-2xl'/>(02) 7007-2412</a>
+                        ><HiPhone className='text-xl md:text-2xl text-dark-blue'/>(02) 7007-2412</a>
                         <a
                             href='tel:+639286935815'                            
                             className='col-span-1 flex gap-2 items-center hover:underline focus:underline ease-out duration-200 text-nowrap'
-                        ><HiPhone className='text-xl md:text-2xl'/>+63 928 693 5815</a>
+                        ><HiPhone className='text-xl md:text-2xl text-dark-blue'/>+63 928 693 5815</a>
                         <a
                             href='tel:+639772473179'                            
                             className='col-span-1 flex gap-2 items-center hover:underline focus:underline ease-out duration-200 text-nowrap'
-                        ><HiPhone className='text-xl md:text-2xl'/>+63 977 247 3179</a>
+                        ><HiPhone className='text-xl md:text-2xl text-dark-blue'/>+63 977 247 3179</a>
                         <a 
                             href="https://www.google.com/maps/place/17+Vatican+City+Dr,+Las+Pi%C3%B1as" 
                             target="_blank"

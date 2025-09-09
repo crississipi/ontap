@@ -3,39 +3,9 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Input from './Input'
 import { motion } from 'framer-motion';
+import { HiArrowRight } from 'react-icons/hi2';
 
-const InputData = [
-    {
-        name: 'fname',
-        label: 'First Name',
-        placeholder: 'Your First Name',
-        type: 'text'
-    },
-    {
-        name: 'lname',
-        label: 'Last Name',
-        placeholder: 'Your Last Name',
-        type: 'text'
-    },
-    {
-        name: 'emailAdd',
-        label: 'Email Address',
-        placeholder: 'Your Email Address',
-        type: 'email'
-    },
-    {
-        name: 'mobNum',
-        label: 'Mobile Number',
-        placeholder: 'Enter your Contact Number',
-        type: 'text'
-    },
-    {
-        name: 'compName',
-        label: 'Company Name',
-        placeholder: 'Your Company Name',
-        type: 'text'
-    },
-]
+
 
 function useInView(threshold = 0.1) {
   const ref = useRef<HTMLDivElement | null>(null);
@@ -58,8 +28,103 @@ function useInView(threshold = 0.1) {
 
   return { ref, isInView };
 }
+
 const FillUpForm = () => {
   const { ref: fillUpRef, isInView: fillUpVisible } = useInView();
+  const [userInfo, storeUserInfo] = useState({
+    fname: '',
+    lname: '',
+    contact: '',
+    email: '',
+    message: '',
+    compName: '',
+    subject: `OnTap Product Inquiry`,
+  });
+
+  const submitEmail = async () => {
+    const payload = {
+        email: userInfo.email.toLowerCase(),
+        name: (userInfo.fname + ' ' + userInfo.lname).toLowerCase().split(" ").map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" "),
+        subject: userInfo.subject,
+        message: userInfo.message,
+        companyName: userInfo.compName,
+        time: new Date().toLocaleString()
+    };
+
+    try {
+        const res = await fetch('/api/product-inquiry-email', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+            alert('Message sent successfully!');
+            storeUserInfo({
+            fname: '',
+            lname: '',
+            contact: '',
+            email: '',
+            message: '',
+            compName: '',
+            subject: `OnTap Product Inquiry`,
+            });
+        } else {
+            alert(`Error: ${data.message}`);
+        }
+        } catch (error) {
+            console.error('Error sending email:', error);
+            alert('An unexpected error occurred.');
+        }
+  };
+
+  const getInputs = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    storeUserInfo((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const InputData = [
+    {
+        name: 'fname',
+        label: 'First Name',
+        placeholder: 'Your First Name',
+        type: 'text',
+        value: userInfo.fname
+    },
+    {
+        name: 'lname',
+        label: 'Last Name',
+        placeholder: 'Your Last Name',
+        type: 'text',
+        value: userInfo.lname
+    },
+    {
+        name: 'email',
+        label: 'Email Address',
+        placeholder: 'Your Email Address',
+        type: 'email',
+        value: userInfo.email
+    },
+    {
+        name: 'contact',
+        label: 'Mobile Number',
+        placeholder: 'Enter your Contact Number',
+        type: 'text',
+        value: userInfo.email
+    },
+    {
+        name: 'compName',
+        label: 'Company Name',
+        placeholder: 'Your Company Name',
+        type: 'text',
+        value: userInfo.compName
+    },
+  ]
 
   return (
     <div ref={fillUpRef} className='w-full flex flex-col py-20 items-center gap-5'>
@@ -82,12 +147,17 @@ const FillUpForm = () => {
                     type={val.type}
                     placeholder={val.placeholder}
                     label={val.label}
+                    value={val.value}
+                    onChange={getInputs}
                 >
                 </Input>
             ))}
             <span className='flex flex-col'>
                 <label htmlFor='messageBox'>Message <span className='text-rose-500'>*</span></label>
-                <textarea name='messageBox' defaultValue='Input your message here...' className='resize-none min-h-52 rounded-sm bg-neutral-200 p-3 px-5'></textarea>
+                <textarea name='messageBox' className='resize-none min-h-52 rounded-sm bg-neutral-200 p-3 px-5' value={userInfo.message} onChange={getInputs}></textarea>
+            </span>
+            <span className='w-full flex justify-end'>
+                <button type="button" className='px-5 py-3 pr-4 flex items-center gap-3 rounded-md bg-light-blue hover:bg-blue focus:bg-dark-blue focus:text-white ease-out duration-200' onClick={() => submitEmail}>Submit <HiArrowRight /></button>
             </span>
         </motion.form>   
     </div>

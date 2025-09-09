@@ -5,8 +5,10 @@ interface InputProps {
     label: string;
     placeholder: string;
     type: string;
+    value: string;
+    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
-const Input = ({ name, label, placeholder, type }: InputProps) => {
+const Input = ({ name, label, placeholder, type, value, onChange }: InputProps) => {
   return (
     <span className='rounded-lg flex flex-col '>
         <label 
@@ -20,6 +22,8 @@ const Input = ({ name, label, placeholder, type }: InputProps) => {
             type={type} 
             placeholder={placeholder}
             className='p-3 px-5 rounded-xs bg-neutral-200'
+            value={value}
+            onChange={onChange}
         >
         </input>
     </span>

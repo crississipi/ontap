@@ -36,26 +36,26 @@ const PopUp = ({ setShowPopup }: PopupProps) => {
                 </span>
             </div>
             
-            <div className='grid grid-cols-2 md:grid-cols-3 w-full gap-2 font-bold text-sm'>
+            <div className='grid grid-cols-2 md:grid-cols-3 w-full gap-2 font-bold text-sm md:text-base'>
                 <span className='col-span-full w-full text-center font-normal text-lg mb-2'>- or contact us via -</span>
                 <a
                     href='tel:+0270072412'                            
                     className='col-span-1 flex gap-2 items-center hover:underline focus:underline ease-out duration-200 text-nowrap'
                 >
-                    <HiPhone className='text-xl md:text-2xl'/>
+                    <HiPhone className='text-xl md:text-2xl text-dark-blue'/>
                     (02) 7007-2412
                 </a>
                 <a
                     href='tel:+639286935815'                            
                     className='col-span-1 flex gap-2 items-center hover:underline focus:underline ease-out duration-200 text-nowrap'
                 >
-                    <HiPhone className='text-xl md:text-2xl'/>
+                    <HiPhone className='text-xl md:text-2xl text-dark-blue'/>
                     +63 928 693 5815
                 </a>
                 <a
                     href='tel:+639772473179'                            
                     className='col-span-1 flex gap-2 items-center hover:underline focus:underline ease-out duration-200 text-nowrap'
-                ><HiPhone className='text-xl md:text-2xl'/>+63 977 247 3179</a>
+                ><HiPhone className='text-xl md:text-2xl text-dark-blue'/>+63 977 247 3179</a>
                 <a 
                     href="https://www.google.com/maps/place/17+Vatican+City+Dr,+Las+Pi%C3%B1as" 
                     target="_blank"

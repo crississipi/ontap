@@ -1,7 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Image from 'next/image'
 
 const AboutUs = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0); // jump to top on mount
+  }, []);
+  
   return (
     <section className='h-[100vh] md:h-auto w-full flex flex-col gap-5 text-dark-blue py-16'>
         <div className='md:min-h-[100vh] h-64 w-full flex items-center justify-center relative'>

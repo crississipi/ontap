@@ -18,27 +18,51 @@ export default function Home() {
     5: <AboutUs />
   }
 
-useEffect(() => {
-  const stopWarp = setTimeout(() => {
-    endWarpingNow(true);
-  }, 8000);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    const preventScroll = (e: Event) => {
+      e.preventDefault();
+      e.stopPropagation();
+    };
 
-  const handleScroll = () => {
-    const scrollPosition = window.innerHeight + window.scrollY;
-    const bottom = document.documentElement.scrollHeight;
+    window.addEventListener("wheel", preventScroll, { passive: false });
+    window.addEventListener("touchmove", preventScroll, { passive: false });
 
-    if (scrollPosition >= bottom - 2) { // tolerance
-      setShowPopup(true);
-    }
-  };
+    const timer = setTimeout(() => {
+      window.removeEventListener("wheel", preventScroll);
+      window.removeEventListener("touchmove", preventScroll);
+      endWarpingNow(true);
+    }, 3000);
 
-  window.addEventListener("scroll", handleScroll);
+    return () => clearTimeout(timer);
+  }, []);
 
-  return () => {
-    clearTimeout(stopWarp);
-    window.removeEventListener("scroll", handleScroll);
-  };
-}, [showPopup]);
+
+  useEffect(() => {
+    let canTrigger = true;
+    let cooldownTimer: NodeJS.Timeout;
+
+    const handleScroll = () => {
+      const scrollPosition = window.innerHeight + window.scrollY;
+      const bottom = document.documentElement.scrollHeight;
+
+      if (scrollPosition >= bottom - 2 && canTrigger) {
+        setShowPopup(true);
+        canTrigger = false;
+
+        cooldownTimer = setTimeout(() => {
+          canTrigger = true;
+        }, 10000);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      clearTimeout(cooldownTimer);
+    };
+  }, []);
 
   return (
     <main className='min-h-[100vh] h-auto w-full flex flex-col items-center relative overflow-x-hidden p-0 m-0 select-none'>
@@ -47,17 +71,13 @@ useEffect(() => {
         <>
           <AnimatePresence mode='wait'>{!endWarping && (<Starting/>)}</AnimatePresence>
           <Hero endWarping={endWarping}/>
-          {endWarping && (
-          <>
-            <About />
-            <VideoTutorial />
-            <FillUpForm />
-            <ClientList />
-          </>
-          )}
+          <About />
+          <VideoTutorial />
+          <FillUpForm />
+          <ClientList />
+          <Footer setPage={setPage}/>
         </>
         ) : SectionPage[page]}
-      {endWarping && (<Footer setPage={setPage}/>)}
       {page !== 2 && (
         <motion.button 
           type="button" 
@@ -68,7 +88,7 @@ useEffect(() => {
             repeat: Infinity,
             repeatType: 'loop'
           }}
-          className="fixed z-9999 right-0 top-3/4 flex items-center text-blue gap-2 md:text-lg font-bold bg-white p-1 md:p-1.5 pr-5 rounded-l-full shadow-md shadow-gray-700"
+          className={`fixed z-9999 right-0 top-3/4 flex items-center text-blue gap-2 md:text-lg font-bold bg-white p-1 md:p-1.5 pr-5 rounded-l-full shadow-md shadow-gray-700`}
           onClick={() => setPage(2)}
         >
           <span 

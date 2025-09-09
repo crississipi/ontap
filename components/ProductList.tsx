@@ -1,8 +1,9 @@
 "use client"
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ProductCard from './ProductCard'
 import InquireItem from './InquireItem';
+import { motion } from 'framer-motion';
 
 const ProductCardInfo = [
   [
@@ -60,40 +61,65 @@ const ProductList = () => {
   const [inquire, setInquireItem] = useState(false);
   const [clickedItem, setClickedItem] = useState<any>(null); 
   
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  
   return (
     <section className='min-h-[100vh] w-full flex flex-col items-center justify-center py-16 bg-neutral-50'>
       <h1 className='z-10 w-full text-center text-2xl mt-10 text-black font-semibold md:text-5xl'>OnTap BizCard Products</h1>
       
       <div className='w-full md:w-3/4 h-full grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-7 px-3 py-8 md:px-10'>
         {ProductCardInfo[0].map((val,i) => (
-          <ProductCard 
-            key={`product-${i}`} 
-            imgUrl={val.imgUrl}
-            productName={val.name}
-            productDesc={val.desc}
-            size='aspect-[3/4] md:aspect-[3/5]'
-            setInquireItem={setInquireItem}
-            setClickedItem={setClickedItem}
-            hoverable={true}
-            inquire={inquire}
-          />
+          <motion.div
+            initial={{scale: 0.7}}
+            animate={{scale: 1}}
+            transition={{
+              duration: 0.7,
+              ease: 'easeOut',
+              delay: (i + 1) / 10
+            }}
+          >
+            <ProductCard 
+                key={`product-${i}`} 
+                imgUrl={val.imgUrl}
+                productName={val.name}
+                productDesc={val.desc}
+                size='aspect-[3/4] md:aspect-[3/5]'
+                setInquireItem={setInquireItem}
+                setClickedItem={setClickedItem}
+                hoverable={true}
+                inquire={inquire}
+              />
+          </motion.div>
         ))}
       </div>
       
       <h2 className='z-10 w-full text-center text-2xl mt-10 text-black font-semibold md:text-5xl'>Other Products</h2>
       <div className='w-full md:w-3/4 h-full grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-7 px-3 md:px-10 py-8'>
         {ProductCardInfo[1].map((val,i) => (
-          <ProductCard 
-            key={`otherprod-${i}`} 
-            imgUrl={val.imgUrl}
-            productName={val.name}
-            productDesc={val.desc}
-            size='aspect-[3/4]'
-            setInquireItem={setInquireItem}
-            setClickedItem={setClickedItem} // ✅ pass setter
-            hoverable={true}
-            inquire={inquire}
-          />
+          <motion.div
+            initial={{scale: 0.7}}
+            animate={{scale: 1}}
+            transition={{
+              duration: 0.7,
+              ease: 'easeOut',
+              delay: (i + 1) / 10
+            }}
+            className='h-auto w-auto aspect-[3/4]'
+          >
+            <ProductCard 
+              key={`otherprod-${i}`} 
+              imgUrl={val.imgUrl}
+              productName={val.name}
+              productDesc={val.desc}
+              size='h-full w-full'
+              setInquireItem={setInquireItem}
+              setClickedItem={setClickedItem} // ✅ pass setter
+              hoverable={true}
+              inquire={inquire}
+            />
+          </motion.div>
         ))}
       </div>
 

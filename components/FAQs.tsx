@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import FAQsCategory from './FAQsCategory';
 import { HiMiniArrowLeftStartOnRectangle, HiMiniArrowRightStartOnRectangle } from 'react-icons/hi2';
 
@@ -401,6 +401,11 @@ const Answers = [
 const FAQs = () => {
   const [showFAQs, setShowFAQs] = useState(true);
   const [selectedQuestion, setSelectedQuestion] = useState<[number, number]>([0,0]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className='h-[100vh] w-full bg-neutral-100 mt-16 flex flex-col gap-3 overflow-hidden md:py-3'>
         <div className='h-full w-full flex gap-3 relative px-3'>

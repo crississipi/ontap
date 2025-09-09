@@ -10,6 +10,7 @@ function useInView(threshold = 0.1) {
   const [isInView, setIsInView] = useState(false);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     if (!ref.current) return;
 
     const observer = new IntersectionObserver(
